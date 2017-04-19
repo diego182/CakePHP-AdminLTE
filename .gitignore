@@ -1,0 +1,7 @@
+### CakePHP template
+# CakePHP 3
+
+.idea/*
+composer.lock
+/node_modules/*
+/vendor/*
