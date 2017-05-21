@@ -2,8 +2,10 @@
 /**
  * @var \App\View\AppView $this
  */
+use Cake\Core\Configure;
+
 $controller = $this->request->controller;
-$action = $this->request->action;
+$action     = $this->request->action;
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,7 +27,7 @@ $action = $this->request->action;
         'skins/skin-blue-light',
         'jquery-ui.structure.min',
         'jquery-ui.theme.min',
-        'custom'
+        'custom',
     ]) ?>
     <?= $this->fetch('css') ?>
 
@@ -46,31 +48,38 @@ $action = $this->request->action;
         <!-- Logo -->
         <a href="/admin" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>C</b>NX</span>
+            <span class="logo-mini"><?= Configure::read('CakePHPAdminLTE.logo.mini') ?></span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>C</b>onexão</span>
+            <span class="logo-lg"><?= Configure::read('CakePHPAdminLTE.logo.lg') ?></span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">
             <!-- Sidebar toggle button-->
             <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-                <span class="sr-only">Toggle navigation</span>
+                <span class="sr-only"><?= __d('diego182AdminLTE', 'Alternar Navegação') ?></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
 
-            <div class="navbar-custom-menu">
-                <ul class="nav navbar-nav">
-                    <!-- User Account: style can be found in dropdown.less -->
-                    <li class="">
-                        <a href="<?= $this->Url->build( ['prefix' => 'admin', 'plugin' => 'Users', 'controller' => 'Users', 'action' => 'logout']) ?>">
-                            <span class="hidden-xs"><i class="fa fa-sign-out"></i> Logout</span>
-                        </a>
-                    </li>
-                    <!-- Control Sidebar Toggle Button -->
-                </ul>
-            </div>
+            <?php if (\Cake\Core\Plugin::loaded('Users')) : ?>
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <!-- User Account: style can be found in dropdown.less -->
+                        <li class="">
+                            <a href="<?= $this->Url->build([
+                                'prefix'     => 'admin',
+                                'plugin'     => 'Users',
+                                'controller' => 'Users',
+                                'action'     => 'logout',
+                            ]) ?>">
+                                <span class="hidden-xs"><i class="fa fa-sign-out"></i> Logout</span>
+                            </a>
+                        </li>
+                        <!-- Control Sidebar Toggle Button -->
+                    </ul>
+                </div>
+            <?php endif ?>
         </nav>
     </header>
 
@@ -113,7 +122,7 @@ $action = $this->request->action;
     <!-- /.content-wrapper -->
 
     <footer class="main-footer">
-        <strong>Copyright &copy; <?= date('Y') ?></strong> <a href="http://allurecomunicacao.com.br">Allure Comunicação</a>.
+        <?= Configure::read('CakePHPAdminLTE.copyright') ?>
     </footer>
     <!-- /.control-sidebar -->
 </div>
@@ -126,7 +135,7 @@ $action = $this->request->action;
     'fastclick/fastclick',
     'app',
     '//cdn.ckeditor.com/4.6.2/basic/ckeditor.js',
-    'custom'
+    'custom',
 ]) ?>
 </body>
 </html>
