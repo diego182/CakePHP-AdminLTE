@@ -166,3 +166,39 @@ div.images-container {
 div.images-container img {
     margin: 0 auto;
 }
+
+table th:not(:last-child), table td:not(:last-child) {
+    width: 99%;
+    white-space: nowrap
+}
+
+table th:last-child, table td:last-child {
+    white-space: nowrap
+}
+
+table.wrap th:not(:last-child), table.wrap td:not(:last-child) {
+    width: 99%;
+    white-space: normal
+}
+
+table.wrap th:last-child, table.wrap td:last-child {
+    white-space: nowrap
+}
+
+div.subjects span.badge a {
+    color: #fff
+}
+
+.input.text.required label:after, .form-group.required label:after {
+    content: " *";
+    font-weight: bold;
+    color: tomato
+}
+
+.table-striped-2 > tbody > tr:nth-child(4n+1) > td, .table-striped-2 > tbody > tr:nth-child(4n+2) > td {
+    background-color: #f9f9f9
+}
+
+.table-striped-2 > tbody > tr:nth-child(4n+3) > td, .table-striped-2 > tbody > tr:nth-child(4n+4) > td {
+    background-color: #ffffff
+}
