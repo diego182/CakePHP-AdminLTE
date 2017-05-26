@@ -133,5 +133,7 @@ $action     = $this->request->action;
     '//cdn.ckeditor.com/4.6.2/basic/ckeditor.js',
     'custom',
 ]) ?>
+<!-- Script Bottom -->
+<?= $this->fetch('scriptBottom') ?>
 </body>
 </html>
