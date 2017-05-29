@@ -44,18 +44,32 @@ if (isset($modelObject) && $modelObject->hasBehavior('Tree')) {
     <fieldset>
 <%
         foreach ($fields as $field) {
+
+            $label = $field;
+            if (substr($label, -5) === '._ids') {
+                $label = substr($label, 0, -5);
+            }
+            if (strpos($label, '.') !== false) {
+                $fieldElements = explode('.', $label);
+                $label = array_pop($fieldElements);
+            }
+            if (substr($label, -3) === '_id') {
+                $label = substr($label, 0, -3);
+            }
+
             if (in_array($field, $primaryKey)) {
                 continue;
             }
+
             if (isset($keyFields[$field])) {
                 $fieldData = $schema->column($field);
                 if (!empty($fieldData['null'])) {
 %>
-            <?= $this->Form->control('<%= $field %>', ['options' => $<%= $keyFields[$field] %>, 'empty' => true]) ?>
+            <?= $this->Form->control('<%= $field %>', ['label' => '<%= Inflector::humanize(Inflector::underscore($field)) %>', 'options' => $<%= $keyFields[$field] %>, 'empty' => true]) ?>
 <%
                 } else {
 %>
-            <?= $this->Form->control('<%= $field %>', ['options' => $<%= $keyFields[$field] %>]) ?>
+            <?= $this->Form->control('<%= $field %>', ['label' => '<%= Inflector::humanize(Inflector::underscore($field)) %>', 'options' => $<%= $keyFields[$field] %>]) ?>
 <%
                 }
                 continue;
@@ -64,11 +78,11 @@ if (isset($modelObject) && $modelObject->hasBehavior('Tree')) {
                 $fieldData = $schema->column($field);
                 if (in_array($fieldData['type'], ['date', 'datetime', 'time']) && (!empty($fieldData['null']))) {
 %>
-            <?= $this->Form->control('<%= $field %>', ['empty' => true]) ?>
+            <?= $this->Form->control('<%= $field %>', ['label' => '<%= Inflector::humanize(Inflector::underscore($label)) %>', 'empty' => true]) ?>
 <%
                 } else {
 %>
-            <?= $this->Form->control('<%= $field %>') ?>
+            <?= $this->Form->control('<%= $field %>', ['label' => '<%= Inflector::humanize(Inflector::underscore($label)) %>']) ?>
 <%
                 }
             }
@@ -76,7 +90,7 @@ if (isset($modelObject) && $modelObject->hasBehavior('Tree')) {
         if (!empty($associations['BelongsToMany'])) {
             foreach ($associations['BelongsToMany'] as $assocName => $assocData) {
 %>
-            <?= $this->Form->control('<%= $assocData['property'] %>._ids', ['options' => $<%= $assocData['variable'] %>]) ?>
+            <?= $this->Form->control('<%= $assocData['property'] %>._ids', ['label' => '<%= Inflector::humanize(Inflector::underscore($label)) %>', 'options' => $<%= $assocData['variable'] %>]) ?>
 <%
             }
         }
