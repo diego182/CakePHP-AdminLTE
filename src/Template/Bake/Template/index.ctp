@@ -56,7 +56,7 @@ if (!empty($indexColumns)) {
 </div>
 <?php//= $this->Form->end() */ ?>
 <div class="pull-right box-tools">
-    <?= $this->Html->link('<i class="fa fa-plus"></i>' . __('Adicionar'), ['action' => 'add'], ['class' => 'btn btn-success btn-sm', 'escape' => false]) ?>
+    <?= $this->Html->link('<i class="fa fa-plus"></i> ' . __('Adicionar'), ['action' => 'add'], ['class' => 'btn btn-success btn-sm', 'escape' => false]) ?>
 </div>
 <?php $this->end() ?>
 
