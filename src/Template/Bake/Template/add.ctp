@@ -19,5 +19,7 @@
   */
 $this->extend('/Admin/Common/form');
 $this->assign('title', 'Adicionar <%= $singularHumanName %>');
+$this->Breadcrumbs->add('<%= $pluralHumanName %>');
+$this->Breadcrumbs->add('Adicionar');
 ?>
 <%= $this->element('form');
