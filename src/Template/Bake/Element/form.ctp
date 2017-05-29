@@ -25,39 +25,23 @@ if (isset($modelObject) && $modelObject->hasBehavior('Tree')) {
     });
 }
 %>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-<% if (strpos($action, 'add') === false): %>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $<%= $singularVar %>-><%= $primaryKey[0] %>],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $<%= $singularVar %>-><%= $primaryKey[0] %>)]
-            )
-        ?></li>
-<% endif; %>
-        <li><?= $this->Html->link(__('List <%= $pluralHumanName %>'), ['action' => 'index']) ?></li>
-<%
-        $done = [];
-        foreach ($associations as $type => $data) {
-            foreach ($data as $alias => $details) {
-                if ($details['controller'] !== $this->name && !in_array($details['controller'], $done)) {
-%>
-        <li><?= $this->Html->link(__('List <%= $this->_pluralHumanName($alias) %>'), ['controller' => '<%= $details['controller'] %>', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New <%= $this->_singularHumanName($alias) %>'), ['controller' => '<%= $details['controller'] %>', 'action' => 'add']) ?></li>
-<%
-                    $done[] = $details['controller'];
-                }
-            }
-        }
-%>
-    </ul>
-</nav>
-<div class="<%= $pluralVar %> form large-9 medium-8 columns content">
-    <?= $this->Form->create($<%= $singularVar %>) ?>
+<?php $this->start('formCreate') ?>
+<?= $this->Form->create($<%= $singularVar %>, ['novalidate']) ?>
+<?php $this->end() ?>
+
+<?php $this->start('boxHeader') ?>
+<?php if ('add' === $this->request->action) : ?>
+    <h3 class="box-title">Adicionar</h3>
+<?php else : ?>
+    <h3 class="box-title">Editar: <?= $<%= $singularVar %>-><%= $displayField %> ?></h3>
+<?php endif ?>
+<div class="pull-right box-tools">
+    <?= $this->Html->link('<i class="fa fa-times"></i> Cancelar', ['action' => 'index'],
+        ['class' => 'btn btn-danger btn-sm', 'escape' => false]) ?>
+</div>
+<?php $this->end() ?>
+
     <fieldset>
-        <legend><?= __('<%= Inflector::humanize($action) %> <%= $singularHumanName %>') ?></legend>
-        <?php
 <%
         foreach ($fields as $field) {
             if (in_array($field, $primaryKey)) {
@@ -67,11 +51,11 @@ if (isset($modelObject) && $modelObject->hasBehavior('Tree')) {
                 $fieldData = $schema->column($field);
                 if (!empty($fieldData['null'])) {
 %>
-            echo $this->Form->control('<%= $field %>', ['options' => $<%= $keyFields[$field] %>, 'empty' => true]);
+            <?= $this->Form->control('<%= $field %>', ['options' => $<%= $keyFields[$field] %>, 'empty' => true]) ?>
 <%
                 } else {
 %>
-            echo $this->Form->control('<%= $field %>', ['options' => $<%= $keyFields[$field] %>]);
+            <?= $this->Form->control('<%= $field %>', ['options' => $<%= $keyFields[$field] %>]) ?>
 <%
                 }
                 continue;
@@ -80,11 +64,11 @@ if (isset($modelObject) && $modelObject->hasBehavior('Tree')) {
                 $fieldData = $schema->column($field);
                 if (in_array($fieldData['type'], ['date', 'datetime', 'time']) && (!empty($fieldData['null']))) {
 %>
-            echo $this->Form->control('<%= $field %>', ['empty' => true]);
+            <?= $this->Form->control('<%= $field %>', ['empty' => true]) ?>
 <%
                 } else {
 %>
-            echo $this->Form->control('<%= $field %>');
+            <?= $this->Form->control('<%= $field %>') ?>
 <%
                 }
             }
@@ -92,13 +76,17 @@ if (isset($modelObject) && $modelObject->hasBehavior('Tree')) {
         if (!empty($associations['BelongsToMany'])) {
             foreach ($associations['BelongsToMany'] as $assocName => $assocData) {
 %>
-            echo $this->Form->control('<%= $assocData['property'] %>._ids', ['options' => $<%= $assocData['variable'] %>]);
+            <?= $this->Form->control('<%= $assocData['property'] %>._ids', ['options' => $<%= $assocData['variable'] %>]) ?>
 <%
             }
         }
 %>
-        ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
-</div>
+
+<?php $this->start('boxFooter') ?>
+<?= $this->Form->button(__('Salvar'), ['class' => 'btn btn-primary']) ?>
+<?php $this->end() ?>
+
+<?php $this->start('formEnd') ?>
+<?= $this->Form->end() ?>
+<?php $this->end() ?>

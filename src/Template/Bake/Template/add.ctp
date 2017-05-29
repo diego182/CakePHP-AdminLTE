@@ -17,5 +17,7 @@
 /**
   * @var \<%= $namespace %>\View\AppView $this
   */
+$this->extend('/Admin/Common/form');
+$this->assign('title', 'Adicionar <%= $singularHumanName %>');
 ?>
 <%= $this->element('form');
