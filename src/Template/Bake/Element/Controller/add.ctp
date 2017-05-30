@@ -26,11 +26,11 @@ $compact = ["'" . $singularName . "'"];
         if ($this->request->is('post')) {
             $<%= $singularName %> = $this-><%= $currentModelName %>->patchEntity($<%= $singularName %>, $this->request->getData());
             if ($this-><%= $currentModelName; %>->save($<%= $singularName %>)) {
-                $this->Flash->success(__('The <%= strtolower($singularHumanName) %> has been saved.'));
+                $this->Flash->success(__('O <%= strtolower($singularHumanName) %> foi criado com sucesso.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The <%= strtolower($singularHumanName) %> could not be saved. Please, try again.'));
+            $this->Flash->error(__('O <%= strtolower($singularHumanName) %> não pode ser criado, tente novamente.'));
         }
 <%
         $associations = array_merge(

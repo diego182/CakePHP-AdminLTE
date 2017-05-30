@@ -20,6 +20,6 @@
 $this->extend('/Admin/Common/form');
 $this->assign('title', 'Editar <%= $singularHumanName %>');
 $this->Breadcrumbs->add('<%= $pluralHumanName %>');
-$this->Breadcrumbs->add('Listar');
+$this->Breadcrumbs->add(__('Editar'));
 ?>
 <%= $this->element('form');

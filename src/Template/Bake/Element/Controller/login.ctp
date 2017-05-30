@@ -28,6 +28,6 @@
 
                 return $this->redirect($this->Auth->redirectUrl());
             }
-            $this->Flash->error(__('Invalid credentials, try again'));
+            $this->Flash->error(__('Login inválido, tente novamente.'));
         }
     }
