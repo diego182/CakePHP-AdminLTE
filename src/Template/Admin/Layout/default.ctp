@@ -22,9 +22,9 @@ $action     = $this->request->action;
 
     <?= $this->Html->css([
         'bootstrap.min',
-        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
+        'font-awesome.min',
         'AdminLTE.min',
-        'skins/skin-blue-light',
+        'skins/skin-blue-light.min',
         'jquery-ui.structure.min',
         'jquery-ui.theme.min',
         'custom',
@@ -126,10 +126,10 @@ $action     = $this->request->action;
 <?= $this->Html->script([
     'jQuery',
     'jquery-ui.min',
-    'bootstrap',
+    'bootstrap.min',
     'slimScroll/jquery.slimscroll.min',
-    'fastclick/fastclick',
-    'app',
+    'fastclick/fastclick.min',
+    'app.min',
     '//cdn.ckeditor.com/4.6.2/basic/ckeditor.js',
     'custom',
 ]) ?>
