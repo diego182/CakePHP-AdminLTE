@@ -2,7 +2,7 @@
 /**
  * @var \App\View\AppView $this
  */
-$this->Breadcrumbs->add('<i class="fa fa-home" aria-hidden="true"></i>')
+$this->Breadcrumbs->prepend('<i class="fa fa-home" aria-hidden="true"></i>')
 ?>
 <!-- Default box -->
 <div class="box box-success">
