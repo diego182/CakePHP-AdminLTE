@@ -70,6 +70,10 @@ if (!empty($indexColumns)) {
                 <th scope="col"><?= $this->Paginator->sort('<%= $field %>', __('Criado em')) ?></th>
 <% elseif ($field === 'modified') : %>
                 <th scope="col"><?= $this->Paginator->sort('<%= $field %>', __('Modificado em')) ?></th>
+<% elseif ($field === 'name') : %>
+                <th scope="col"><?= $this->Paginator->sort('<%= $field %>', __('Nome')) ?></th>
+<% elseif ($field === 'title') : %>
+                <th scope="col"><?= $this->Paginator->sort('<%= $field %>', __('Título')) ?></th>
 <% else : %>
                 <th scope="col"><?= $this->Paginator->sort('<%= $field %>') ?></th>
 <% endif %>
