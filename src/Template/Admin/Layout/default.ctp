@@ -2,10 +2,11 @@
 /**
  * @var \App\View\AppView $this
  */
+
 use Cake\Core\Configure;
 
 $controller = $this->request->controller;
-$action     = $this->request->action;
+$action = $this->request->action;
 ?>
 <!DOCTYPE html>
 <html>
@@ -68,10 +69,10 @@ $action     = $this->request->action;
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="">
                             <a href="<?= $this->Url->build([
-                                'prefix'     => 'admin',
-                                'plugin'     => 'Users',
+                                'prefix' => 'admin',
+                                'plugin' => 'Users',
                                 'controller' => 'Users',
-                                'action'     => 'logout',
+                                'action' => 'logout',
                             ]) ?>">
                                 <span class="hidden-xs"><i class="fa fa-sign-out"></i> Logout</span>
                             </a>
@@ -122,6 +123,7 @@ $action     = $this->request->action;
     </footer>
     <!-- /.control-sidebar -->
 </div>
+<?= $this->fetch('modalBottom') ?>
 <!-- ./wrapper -->
 <?= $this->Html->script([
     'jQuery',
