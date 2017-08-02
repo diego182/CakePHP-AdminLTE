@@ -41,7 +41,7 @@ $(document).ready(function () {
      *     }
      * }
      */
-    $('[data-activate-toggle]').on('click', function (event) {
+    jQuery(document).on('click', '[data-activate-toggle]', function (event) {
         /**
          * Prevent default actions of the JS and stops propagation
          */
@@ -52,7 +52,7 @@ $(document).ready(function () {
          * Keep this object for later use, as AJAX requests return a new object.
          * @type {*}
          */
-        var $this = $(this);
+        var $this = jQuery(this);
 
         /**
          * Keep the original class, so in case of fail it will get back to it.
@@ -114,43 +114,20 @@ $(document).ready(function () {
         });
     });
 
-    function showFile($data) {
-        var $filePlaceholder = $('[data-file-placeholder]');
-
-        $filePlaceholder.append('<div class="img-container" id="sort_' + $data.file.payload.id + '">');
-
-        $file = $('#sort_' + $data.file.payload.id);
-
-        if ($filePlaceholder.hasClass('public-site')) {
-            $file.append('<img src="' + ($data.file.url).replace('/web/', '/sq/') + '" width="150" height="150" class="img-responsive" alt="' + $data.file.payload.original_name + '">');
-        } else if ($filePlaceholder.hasClass('web')) {
-            $file.append('<img src="' + ($data.file.url).replace('/original/', '/web/') + '" class="img-responsive" alt="' + $data.file.payload.original_name + '">');
-        } else if ($filePlaceholder.hasClass('banner')) {
-            $file.append('<img src="' + ($data.file.url).replace('/original/', '/1920x750/') + '" class="img-responsive" alt="' + $data.file.payload.original_name + '">');
-        } else {
-            $file.append('<img src="' + ($data.file.url).replace('/web/', '/sq/') + '" class="img-responsive" alt="' + $data.file.payload.original_name + '">');
-        }
-
-        $file.append('<input type="hidden" name="file_id" value="' + $data.file.payload.id + '">');
-    }
-
-    var $uploadFile = $('[data-file-upload]');
-
     /**
      * Uploads a file.
      */
-    $uploadFile.on('change', function (event) {
+    $('[data-file-upload]').on('change', function (event) {
         event.stopPropagation();
 
         var $this = $(this);
-
-        var data = new FormData();
-        data.append('file', $this.prop('files')[0]);
+        var $data = new FormData();
+        $data.append('file', $this.prop('files')[0]);
 
         $.ajax({
             type: 'post',
             url: $this.data('href'),
-            data: data,
+            data: $data,
             dataType: 'json',
             cache: false,
             processData: false, // important for ajax file upload
@@ -158,39 +135,96 @@ $(document).ready(function () {
             headers: {
                 'X-CSRF-Token': readCookie('csrfToken')
             },
-            beforeSend: function () {
+            beforeSend: function (jqXHR, settings) {
                 $this.siblings('i').removeClass('fa-image').addClass('fa-spinner fa-spin');
+                $this.parent('label').after('<div id="upload-progress" class="progress" style="margin-top: 30px">' +
+                    '    <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">' +
+                    '        0%' +
+                    '    </div>' +
+                    '</div>').hide().slideDown();
+            },
+            xhr: function () {
+                var xhr = new window.XMLHttpRequest();
+
+                xhr.upload.addEventListener('progress', function (event) {
+                    if (event.lengthComputable) {
+                        var percent = Math.round((event.loaded / event.total) * 100);
+                        jQuery('#upload-progress').find('.progress-bar').attr('aria-valuenow', percent).css('width', percent + '%').text(percent + '%');
+                        if (100 === percent) {
+                            jQuery('#upload-progress').find('.progress-bar').text('Processando o arquivo.')
+                        }
+                    }
+                });
+
+                return xhr;
             }
         }).done(function (data, textStatus, jqXHR) {
-            if ('undefined' !== typeof data.file.success && data.file.success) {
-                $('.img-container').remove();
-                showFile(data);
-            } else {
-                alert('Algo errado aconteceu no envio da imagem');
+            try {
+                var $data = data.file;
+
+                if ($data.success) {
+                    var $filePlaceholder = jQuery('[data-file-placeholder]');
+                    var $classToContainer = (typeof $filePlaceholder.data('file-add-class') === 'undefined') ? 'col-md-4 col-sm-6' : $filePlaceholder.data('file-add-class');
+                    var $imageLink = (typeof $filePlaceholder.data('file-format') !== 'undefined') ? ($data.url).replace('/original/', $filePlaceholder.data('file-format')) : ($data.url).replace('/original/', '/web/');
+
+                    var $dataToAppend = '<div id="sort_' + $data.payload.id + '" class="sort-drag-area ' + $classToContainer + '">' +
+                        '    <div class="thumbnail">' +
+                        '        <img src="' + $imageLink + '" class="img-responsive" alt="' + $data.payload.title + '">' +
+                        '        <div class="caption btn-group btn-group-justified" role="group">' +
+                        '            <a href="' + $filePlaceholder.data('featured-link') + '/' + $data.payload.id + '" class="btn btn-info" data-activate-toggle>' +
+                        '                <i class="fa fa-lg fa-square-o" aria-hidden="true"></i>' +
+                        '            </a>' +
+                        '            <a href="' + $filePlaceholder.data('edit-link') + '/' + $data.payload.id + '" class="btn btn-warning">Editar</a>' +
+                        '            <a href="#" class="btn btn-danger" data-remove-image-from-list>Apagar</a>' +
+                        '         </div>';
+                    if ($filePlaceholder.data('allow-mutiple')) {
+                        $dataToAppend += '<input type="hidden" name="files[_ids][' + (jQuery('.sort-drag-area').length + 1) + ']" value="' + $data.payload.id + '">';
+                    } else {
+                        $dataToAppend += '<input type="hidden" name="files[id]" value="' + $data.payload.id + '">';
+                    }
+                    $dataToAppend += '    </div>' +
+                        '</div>';
+
+
+                    $filePlaceholder.append($dataToAppend);
+                    jQuery('#file-messages').removeClass('hide').show().find('p').text('Arquivos adicionados e não salvos.');
+                }
+            } catch (exception) {
+                alert('Algo errado aconteceu no envio da imagem!');
+                console.error(exception.message);
             }
         }).always(function () {
             $this.siblings('i').addClass('fa-image').removeClass('fa-spinner fa-spin');
+            $('#upload-progress').slideUp('normal', function () {
+                $(this).remove();
+            });
         });
     });
 
-    $(document).on('click', '[data-remove-image-from-list]', function (event) {
+    jQuery(document).on('click', '[data-remove-image-from-list]', function (event) {
         event.preventDefault();
         event.stopPropagation();
 
-        $(this).parent().parent().remove();
+        jQuery(this).closest('[id^=sort]').remove();
+        jQuery('#file-messages').removeClass('hide').show().find('p').text('Arquivos modificados e não salvos.');
     });
 
-    var $sortable = $('[data-sortable]');
-
-    $sortable.sortable({
+    $('[data-sortable]').sortable({
         placeholder: 'ui-state-highlight',
-        handle: '.sort',
+        //handle: '.sort-drag-area',
+        start: function (event, ui) {
+            ui.placeholder.addClass('col-md-4 col-sm-6');
+            ui.placeholder.css({
+                'height': ui.item.innerHeight() + 'px',
+                'width': ui.item.innerWidth() + 'px'
+            });
+        },
         stop: function (event, ui) {
             var data = $(this).sortable('serialize', {expression: '(.+)_(.+)'});
             $.ajax({
                 data: data,
-                type: 'POST',
-                url: $(this).data('request-url'),
+                type: 'post',
+                url: $(this).data('sortable'),
                 dataType: 'json',
                 headers: {
                     'X-CSRF-Token': readCookie('csrfToken')
