@@ -42,7 +42,7 @@ $action = $this->request->action;
     <![endif]-->
 </head>
 
-<body class="hold-transition skin-blue-light sidebar-mini fixed">
+<body class="hold-transition sidebar-mini fixed <?= Configure::read('CakePHPAdminLTE.theme') ?>">
 <!-- Site wrapper -->
 <div class="wrapper">
     <header class="main-header">
