@@ -134,6 +134,7 @@ $action = $this->request->action;
     'app.min',
     '//cdn.ckeditor.com/4.6.2/basic/ckeditor.js',
     'custom',
+    'toggle',
 ]) ?>
 <!-- Script Bottom -->
 <?= $this->fetch('scriptBottom') ?>
