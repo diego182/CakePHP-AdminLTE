@@ -15,8 +15,9 @@
 %>
 <?php
 /**
-  * @var \<%= $namespace %>\View\AppView $this
-  */
+ * @var \<%= $namespace %>\View\AppView $this
+ * @var \<%= $entityClass %>[]|\Cake\Collection\CollectionInterface $<%= $pluralVar %>
+ */
 $this->extend('/Admin/Common/index');
 $this->assign('title', 'Listar <%= $pluralHumanName %>');
 $this->Breadcrumbs->add('<%= $pluralHumanName %>');
@@ -64,6 +65,7 @@ if (!empty($indexColumns)) {
     <table class="table table-striped table-hover">
         <thead>
             <tr>
+<% $i = 0 %>
 <% foreach ($fields as $field): %>
 <% if($field === 'id') continue; %>
 <% if($field === 'created') : %>
@@ -77,11 +79,15 @@ if (!empty($indexColumns)) {
 <% else : %>
                 <th scope="col"><?= $this->Paginator->sort('<%= $field %>') ?></th>
 <% endif %>
+<% $i++; %>
 <% endforeach; %>
                 <th scope="col" class="actions"><?= __('Opções') ?></th>
             </tr>
         </thead>
         <tbody>
+            <?php if($<%= $pluralVar %>->isEmpty()) {
+                echo $this->Utilities->emptyResultsTable(<%= ($i+1) %>);
+            } ?>
             <?php foreach ($<%= $pluralVar %> as $<%= $singularVar %>): ?>
             <tr>
 <%        foreach ($fields as $field) {

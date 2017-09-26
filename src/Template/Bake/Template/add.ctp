@@ -15,8 +15,9 @@
 %>
 <?php
 /**
-  * @var \<%= $namespace %>\View\AppView $this
-  */
+ * @var \<%= $namespace %>\View\AppView $this
+ * @var \<%= $entityClass %> $<%= $singularVar %>
+ */
 $this->extend('/Admin/Common/form');
 $this->assign('title', 'Adicionar <%= $singularHumanName %>');
 $this->Breadcrumbs->add('<%= $pluralHumanName %>');
