@@ -138,3 +138,7 @@ div.subjects span.badge a {
 .table-striped-2 > tbody > tr:nth-child(4n+3) > td, .table-striped-2 > tbody > tr:nth-child(4n+4) > td {
     background-color: #ffffff
 }
+
+.actions .btn-group {
+    display: flex;
+}
