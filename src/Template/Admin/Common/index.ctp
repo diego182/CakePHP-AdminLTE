@@ -14,16 +14,18 @@ $this->Breadcrumbs->prepend('<i class="fa fa-home" aria-hidden="true"></i>')
 
     <!-- /.box-footer-->
     <div class="box-footer">
-        <div class="pull-left">
-            <?= $this->Paginator->counter('{{start}} - {{end}} de {{count}}'); ?>
-        </div>
-        <ul class="pagination pagination-sm no-margin pull-right">
-            <?= $this->Paginator->first(__('«')); ?>
-            <?= $this->Paginator->prev(__('‹')); ?>
-            <?= $this->Paginator->numbers(['before' => null, 'after' => null]); ?>
-            <?= $this->Paginator->next(__('›')); ?>
-            <?= $this->Paginator->last(__('»')); ?>
-        </ul>
+        <?php if ($this->Paginator->hasPage()) : ?>
+            <div class="pull-left">
+                <?= $this->Paginator->counter('{{start}} - {{end}} de {{count}}'); ?>
+            </div>
+            <ul class="pagination pagination-sm no-margin pull-right">
+                <?= $this->Paginator->first(__('«')); ?>
+                <?= $this->Paginator->prev(__('‹')); ?>
+                <?= $this->Paginator->numbers(['before' => null, 'after' => null]); ?>
+                <?= $this->Paginator->next(__('›')); ?>
+                <?= $this->Paginator->last(__('»')); ?>
+            </ul>
+        <?php endif ?>
     </div>
 </div>
 <!-- /.box -->
