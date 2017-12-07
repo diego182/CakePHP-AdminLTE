@@ -1,3 +1,8 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ */
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +15,7 @@
         'bootstrap.min',
         'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
         'AdminLTE.min',
-        'skins/skin-blue-light.css'
+        'skins/skin-blue-light.css',
     ]) ?>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -28,39 +33,19 @@
 
     <!-- /.login-logo -->
     <div class="login-box-body">
-        <p class="login-box-msg">Faça o login para entrar.</p>
+        <?= $this->fetch('request-form-message') ?>
         <!-- content -->
         <?= $this->fetch('content') ?>
         <!-- /content -->
-
+        <?= $this->fetch('request-form-links') ?>
     </div>
     <!-- /.login-box-body -->
 </div>
 <!-- /.login-box -->
 
-<?= $this->Html->script([
-    'jquery-2.2.3.min',
-    'bootstrap.min',
-    'slimScroll/jquery.slimscroll.min',
-    'fastclick/fastclick',
-    'app.min',
-    'bootstrap-datepicker.min',
-    '/locales/bootstrap-datepicker.pt-BR.min',
-    'jquery.Jcrop.min',
-    'custom'
-]).
-$this->fetch('scriptBottom')?>
-<!-- jQuery 2.2.3 -->
-<!-- Bootstrap 3.3.6 -->
-<!-- iCheck -->
-<script>
-    $(function () {
-        $('input').iCheck({
-            checkboxClass: 'icheckbox_square-blue',
-            radioClass: 'iradio_square-blue',
-            increaseArea: '20%' // optional
-        });
-    });
-</script>
+<?php
+echo $this->Html->script(['jQuery']);
+echo $this->fetch('scriptBottom');
+?>
 </body>
 </html>
