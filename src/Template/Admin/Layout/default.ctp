@@ -4,6 +4,7 @@
  */
 
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 
 $controller = $this->request->controller;
 $action = $this->request->action;
@@ -22,13 +23,8 @@ $action = $this->request->action;
     <?= $this->Html->meta('icon') ?>
 
     <?= $this->Html->css([
-        'bootstrap.min',
-        'font-awesome.min',
-        'AdminLTE.min',
-        'skins/skin-blue-light.min',
-        'jquery-ui.structure.min',
-        'jquery-ui.theme.min',
-        'custom',
+        'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic',
+        'style.min',
     ]) ?>
     <?= $this->fetch('css') ?>
 
@@ -63,7 +59,7 @@ $action = $this->request->action;
                 <span class="icon-bar"></span>
             </a>
 
-            <?php if (\Cake\Core\Plugin::loaded('Users')) : ?>
+            <?php if (Plugin::loaded('Users')) : ?>
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
                         <!-- User Account: style can be found in dropdown.less -->
@@ -126,17 +122,9 @@ $action = $this->request->action;
 <?= $this->fetch('modalBottom') ?>
 <!-- ./wrapper -->
 <?= $this->Html->script([
-    'jQuery',
-    'jquery-ui.min',
-    'bootstrap.min',
-    'slimScroll/jquery.slimscroll.min',
-    'fastclick/fastclick.min',
-    'app.min',
-    '//cdn.ckeditor.com/4.6.2/basic/ckeditor.js',
-    'custom',
-    'upload',
-    'toggle',
-]) ?>
+    '//cdn.ckeditor.com/4.8.0/basic/ckeditor.js',
+    'script.min'
+], ['defer']) ?>
 <!-- Script Bottom -->
 <?= $this->fetch('scriptBottom') ?>
 </body>
