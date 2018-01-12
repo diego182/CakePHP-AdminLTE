@@ -65,4 +65,23 @@ $(document).ready(function () {
             });
         });
     }
+
+    var ls = window.localStorage;
+    $sidebarCollapsed = !!parseInt(ls.getItem('sidebar-collapse'));
+
+    $('.sidebar-toggle').on('click', function (event) {
+        if (ls.getItem('sidebar-collapse') === null) {
+            return ls.setItem('sidebar-collapse', 1);
+        }
+
+        if($sidebarCollapsed) {
+            ls.setItem('sidebar-collapse', 0);
+        } else {
+            ls.setItem('sidebar-collapse', 1);
+        }
+    });
+
+    if($sidebarCollapsed){
+        $('body').addClass('sidebar-collapse');
+    }
 });
