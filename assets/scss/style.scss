@@ -1,4 +1,6 @@
-// Core variables and mixins
+// Variables
+@import "variables";
+// Bootstrap core variables and mixins
 @import "bootstrap/bootstrap/variables";
 @import "bootstrap/bootstrap/mixins";
 // Reset and dependencies
@@ -64,5 +66,4 @@
 @import "jquery-ui/jquery-ui.structure";
 @import "jquery-ui/jquery-ui.theme";
 // Custom CSS
-@import "variables";
 @import "custom";
