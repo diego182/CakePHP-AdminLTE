@@ -14,9 +14,7 @@ $action = $this->request->action;
 <head>
     <?= $this->Html->charset() ?>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>
-        <?= $this->fetch('title') ?>
-    </title>
+    <title><?= $this->fetch('title') ?></title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <?= $this->fetch('meta') ?>
 
@@ -52,11 +50,9 @@ $action = $this->request->action;
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">
             <!-- Sidebar toggle button-->
-            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-                <span class="sr-only"><?= __d('diego182AdminLTE', 'Alternar Navegação') ?></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                <span class="sr-only">Toggle navigation</span>
+                <i class="fas fa-bars"></i>
             </a>
 
             <?php if (Plugin::loaded('Users')) : ?>
@@ -70,7 +66,7 @@ $action = $this->request->action;
                                 'controller' => 'Users',
                                 'action' => 'logout',
                             ]) ?>">
-                                <span class="hidden-xs"><i class="fa fa-sign-out"></i> Logout</span>
+                                <span class="hidden-xs"><i class="fas fa-sign-out-alt"></i> Logout</span>
                             </a>
                         </li>
                         <!-- Control Sidebar Toggle Button -->
