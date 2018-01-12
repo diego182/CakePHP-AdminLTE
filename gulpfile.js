@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
+var sourcemaps = require('gulp-sourcemaps');
 
 gulp.task('site', function () {
     return gulp.src([
@@ -15,7 +16,8 @@ gulp.task('site', function () {
         './assets/js/upload.js',
         './assets/js/toggle.js'
     ])
+        .pipe(sourcemaps.init())
         .pipe(concat('script.min.js'))
         .pipe(uglify())
-        .pipe(gulp.dest('./webroot/js'));
-});
+        .pipe(sourcemaps.write('./'))
+        .pipe(gulp.dest('./webroot/js'));});
