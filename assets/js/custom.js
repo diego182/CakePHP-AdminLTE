@@ -74,14 +74,14 @@ $(document).ready(function () {
             return ls.setItem('sidebar-collapse', 1);
         }
 
-        if($sidebarCollapsed) {
+        if ($sidebarCollapsed) {
             ls.setItem('sidebar-collapse', 0);
         } else {
             ls.setItem('sidebar-collapse', 1);
         }
     });
 
-    if($sidebarCollapsed){
+    if ($sidebarCollapsed) {
         $('body').addClass('sidebar-collapse');
     }
 });
