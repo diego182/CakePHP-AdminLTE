@@ -51,7 +51,7 @@ $action = $this->request->action;
         <nav class="navbar navbar-static-top">
             <!-- Sidebar toggle button-->
             <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-                <span class="sr-only">Toggle navigation</span>
+                <span class="sr-only">Alternar navegação</span>
                 <i class="fas fa-bars"></i>
             </a>
 
@@ -66,7 +66,7 @@ $action = $this->request->action;
                                 'controller' => 'Users',
                                 'action' => 'logout',
                             ]) ?>">
-                                <span class="hidden-xs"><i class="fas fa-sign-out-alt"></i> Logout</span>
+                                <span class="hidden-xs">Logout <i class="fas fa-sign-out-alt"></i></span>
                             </a>
                         </li>
                         <!-- Control Sidebar Toggle Button -->
