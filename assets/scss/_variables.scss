@@ -1,4 +1,6 @@
 // Variables
 // --------------------------
 
-$fa-font-path: "../fonts";
+$fonts-path: "../fonts";
+$fa-font-path: $fonts-path;
+$icon-font-path: $fonts-path + "/";
