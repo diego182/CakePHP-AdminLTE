@@ -67,6 +67,7 @@ $(document).ready(function () {
     }
 
     var ls = window.localStorage;
+    // Force boolean with !!
     $sidebarCollapsed = !!parseInt(ls.getItem('sidebar-collapse'));
 
     $('.sidebar-toggle').on('click', function (event) {
