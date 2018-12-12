@@ -25,7 +25,11 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <b>Allure</b>CMS
+        <?php if (\Cake\Core\Configure::check('CakePHPAdminLTE.login.title')) : ?>
+            <?= \Cake\Core\Configure::read('CakePHPAdminLTE.login.title') ?>
+        <?php else: ?>
+            <b>CMS</b>
+        <?php endif ?>
     </div>
     <?= $this->Flash->render(); ?>
 
